@@ -68,6 +68,30 @@ namespace pharmacystock.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            // Aynı e-posta ile kayıt var mı?
+            var existingEmail = await _userManager.FindByEmailAsync(model.Email);
+
+            if (existingEmail != null)
+            {
+                ModelState.AddModelError(
+                    "Email",
+                    "Bu e-posta adresi zaten kullanılıyor.");
+
+                return View(model);
+            }
+
+            // Aynı kullanıcı adı var mı?
+            var existingUserName = await _userManager.FindByNameAsync(model.UserName);
+
+            if (existingUserName != null)
+            {
+                ModelState.AddModelError(
+                    "UserName",
+                    "Bu kullanıcı adı zaten kullanılıyor.");
+
+                return View(model);
+            }
+
             var user = new IdentityUser
             {
                 UserName = model.UserName,
@@ -100,9 +124,113 @@ namespace pharmacystock.Controllers
         [HttpGet]
         public IActionResult ForgotPassword()
         {
-            TempData["Message"] = "Bu özellik yakında eklenecek.";
+            return View();
+        }
 
-            return RedirectToAction(nameof(Login));
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                ViewBag.Error = "Lütfen e-posta adresinizi giriniz.";
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                ViewBag.Error = "Bu e-posta adresine ait kullanıcı bulunamadı.";
+                return View();
+            }
+
+            var token =
+                await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            return RedirectToAction(
+                nameof(ResetPassword),
+                new
+                {
+                    email = user.Email,
+                    token = token
+                });
+        }
+
+        // =========================
+        // RESET PASSWORD
+        // =========================
+
+        [HttpGet]
+        public IActionResult ResetPassword(string email, string token)
+        {
+            if (string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(token))
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            ViewBag.Email = email;
+            ViewBag.Token = token;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(
+            string email,
+            string token,
+            string password,
+            string confirmPassword)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                ViewBag.Error = "Yeni şifre boş bırakılamaz.";
+                ViewBag.Email = email;
+                ViewBag.Token = token;
+
+                return View();
+            }
+
+            if (password != confirmPassword)
+            {
+                ViewBag.Error = "Şifreler eşleşmiyor.";
+                ViewBag.Email = email;
+                ViewBag.Token = token;
+
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            var result = await _userManager.ResetPasswordAsync(
+                user,
+                token,
+                password);
+
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] =
+                    "Şifreniz başarıyla değiştirildi. Yeni şifrenizle giriş yapabilirsiniz.";
+
+                return RedirectToAction(nameof(Login));
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            ViewBag.Email = email;
+            ViewBag.Token = token;
+
+            return View();
         }
 
         // =========================

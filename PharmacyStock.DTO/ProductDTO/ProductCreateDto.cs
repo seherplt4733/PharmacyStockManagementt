@@ -9,12 +9,12 @@ namespace PharmacyStock.DTO.ProductDTO
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Barkod zorunludur.")]
-        [StringLength(
-            13,
-            MinimumLength = 13,
-            ErrorMessage = "Barkod 13 haneli olmalıdır."
-        )]
+        [RegularExpression(
+          @"^\d{13}$",
+                      ErrorMessage = "Barkod yalnızca rakamlardan oluşan 13 haneli bir değer olmalıdır."
+             )]
         public string Barcode { get; set; } = string.Empty;
+    
 
         [Required]
         public int CategoryId { get; set; }

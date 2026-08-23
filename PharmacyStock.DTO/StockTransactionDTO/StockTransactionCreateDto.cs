@@ -22,7 +22,16 @@ namespace PharmacyStock.DTO.StockTransactionDTO
         [Display(Name = "İşlem Tarihi")]
         public DateTime TransactionDate { get; set; } = DateTime.Now;
 
-        [Display(Name = "Seri Numaraları (Satır veya virgül ile ayırın)")]
+        [Display(Name = "Parti / Lot Numarası")]
+        [StringLength(
+            30,
+            MinimumLength = 3,
+            ErrorMessage = "Parti / Lot numarası 3 ile 30 karakter arasında olmalıdır."
+        )]
+        [RegularExpression(
+            @"^[A-Za-z0-9-]+$",
+            ErrorMessage = "Parti / Lot numarası yalnızca harf, rakam ve '-' karakterinden oluşmalıdır."
+        )]
         public string? SerialNumbers { get; set; }
 
         [StringLength(

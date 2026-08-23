@@ -4,6 +4,12 @@
     ViewData["Title"] = "Kategori Yönetimi";
 }
 
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/category-index.css"
+          asp-append-version="true" />
+}
+
 <div class="container-fluid py-3">
 
     <!-- ANA KART -->
@@ -255,142 +261,4 @@
 
 </div>
 
-
-<style>
-    /* ============================================================
-           LIGHT MODE
-           ============================================================ */
-
-    .page-card {
-        background-color: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    }
-
-    .page-title-text,
-    .category-name {
-        color: #1a202c !important;
-    }
-
-    .text-secondary-custom {
-        color: #64748b;
-    }
-
-    .border-custom {
-        border: 1px solid #e2e8f0;
-    }
-
-    .search-icon-bg {
-        background-color: #ffffff;
-        border: 1px solid #cbd5e1;
-    }
-
-    .form-control-custom {
-        background-color: #ffffff;
-        border: 1px solid #cbd5e1;
-        color: #1e293b;
-    }
-
-        .form-control-custom:focus {
-            background-color: #ffffff;
-            border-color: #3b82f6;
-            box-shadow: none;
-            color: #0f172a;
-        }
-
-    .table-custom {
-        color: #334155;
-    }
-
-        .table-custom thead {
-            background-color: #f8fafc;
-            color: #475569;
-            font-weight: 600;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .table-custom tbody tr {
-            border-bottom: 1px solid #f1f5f9;
-            transition: background-color 0.2s ease;
-        }
-
-            .table-custom tbody tr:hover {
-                background-color: #f8fafc;
-            }
-
-    .btn-action-badge {
-        padding: 0.25rem 0.5rem;
-        margin: 0 1px;
-        border: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .alert-custom-info {
-        background-color: #eff6ff;
-        color: #1e40af;
-        border: 1px solid #bfdbfe;
-    }
-
-
-    /* ============================================================
-           DARK MODE
-           ============================================================ */
-
-    body.dark-mode .page-card {
-        background-color: #1e1e2d !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    }
-
-    body.dark-mode .page-title-text,
-    body.dark-mode .category-name {
-        color: #ffffff !important;
-    }
-
-    body.dark-mode .text-secondary-custom {
-        color: #94a3b8;
-    }
-
-    body.dark-mode .border-custom {
-        border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    body.dark-mode .search-icon-bg {
-        background-color: #151521 !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-
-    body.dark-mode .form-control-custom {
-        background-color: #151521 !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        color: #f8fafc !important;
-    }
-
-        body.dark-mode .form-control-custom::placeholder {
-            color: #64748b !important;
-        }
-
-    body.dark-mode .table-custom {
-        color: #e2e8f0;
-    }
-
-        body.dark-mode .table-custom thead {
-            background-color: #151521;
-            color: #94a3b8;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        body.dark-mode .table-custom tbody tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-            body.dark-mode .table-custom tbody tr:hover {
-                background-color: rgba(255, 255, 255, 0.02);
-            }
-
-    body.dark-mode .alert-custom-info {
-        background-color: #172554;
-        color: #93c5fd;
-        border: 1px solid #1e40af;
-    }
-</style>
+

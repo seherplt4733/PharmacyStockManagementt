@@ -1,0 +1,79 @@
+/* ============================================================
+   LIGHT MODE
+   ============================================================ */
+
+.form-card {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 12px !important;
+}
+
+.form-title-text {
+    color: #1a202c !important;
+}
+
+.form-label {
+    color: #2d3748;
+}
+
+.custom-input {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #1a202c;
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+}
+
+.custom-input:focus {
+    background-color: #ffffff;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+    color: #1a202c;
+}
+
+.custom-border {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+
+body.dark-mode .form-card {
+    background-color: #1e1e2d !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-mode .form-title-text {
+    color: #ffffff !important;
+}
+
+body.dark-mode .form-label {
+    color: #e2e8f0;
+}
+
+body.dark-mode .custom-input {
+    background-color: #151521;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+body.dark-mode .custom-input:focus {
+    background-color: #1b1b28;
+    border-color: #3182ce;
+    color: #ffffff;
+}
+
+body.dark-mode .custom-border {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.custom-input::placeholder {
+    color: #a0aec0;
+    opacity: 0.8;
+}
+
+body.dark-mode .custom-input::placeholder {
+    color: #6c757d;
+}

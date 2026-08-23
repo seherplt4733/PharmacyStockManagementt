@@ -78,7 +78,8 @@ namespace PharmacyStock.Business.Services
             var category = new Category
             {
                 Name = dto.Name.Trim(),
-                Description = dto.Description
+                Description = dto.Description,
+                CreatedDate = DateTime.Now
             };
 
             await _unitOfWork.Categories.AddAsync(category);

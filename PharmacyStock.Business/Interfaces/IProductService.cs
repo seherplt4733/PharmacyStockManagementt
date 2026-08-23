@@ -23,5 +23,9 @@ namespace PharmacyStock.Business.Interfaces
         Task<List<ProductListDto>> GetExpiringSoonAsync();
 
         Task<List<ProductListDto>> GetExpiredAsync();
+
+        Task<bool> BarcodeExistsAsync(
+           string barcode,
+          int? excludeProductId = null);
     }
 }

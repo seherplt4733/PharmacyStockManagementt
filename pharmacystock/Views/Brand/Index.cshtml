@@ -1,7 +1,13 @@
-﻿@model IEnumerable<PharmacyStock.DTO.BrandDTO.BrandListDto>
+@model IEnumerable<PharmacyStock.DTO.BrandDTO.BrandListDto>
 
 @{
     ViewData["Title"] = "Markalar";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/brand-index.css"
+          asp-append-version="true" />
 }
 
 <div class="container-fluid py-3">
@@ -158,81 +164,4 @@
 
 </div>
 
-
-<style>
-
-    /* ============================================================
-           LIGHT MODE
-           ============================================================ */
-
-    .page-card {
-        background-color: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    }
-
-    .page-title-text,
-    .text-main {
-        color: #1a202c !important;
-    }
-
-    .table-custom {
-        color: #2d3748;
-    }
-
-        .table-custom thead th {
-            background-color: #f8fafc;
-            color: #64748b;
-            font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            border-bottom: 2px solid #e2e8f0;
-            padding: 0.85rem 1rem;
-        }
-
-        .table-custom tbody td {
-            padding: 0.85rem 1rem;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-    .custom-alert-info {
-        background-color: #eff6ff;
-        border: 1px solid #bfdbfe;
-        color: #1e40af;
-    }
-
-
-    /* ============================================================
-           DARK MODE
-           ============================================================ */
-
-    body.dark-mode .page-card {
-        background-color: #1e1e2d !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    }
-
-    body.dark-mode .page-title-text,
-    body.dark-mode .text-main {
-        color: #ffffff !important;
-    }
-
-    body.dark-mode .table-custom {
-        color: #cbd5e1;
-    }
-
-        body.dark-mode .table-custom thead th {
-            background-color: #151521;
-            color: #94a3b8;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-        }
-
-        body.dark-mode .table-custom tbody td {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-    body.dark-mode .custom-alert-info {
-        background-color: rgba(30, 64, 175, 0.2);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        color: #93c5fd;
-    }
-
-</style>
+

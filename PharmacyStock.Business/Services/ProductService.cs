@@ -15,6 +15,10 @@ namespace PharmacyStock.Business.Services
             _unitOfWork = unitOfWork;
         }
 
+        // =====================================================
+        // GET ALL
+        // =====================================================
+
         public async Task<List<ProductListDto>> GetAllAsync(string? search)
         {
             IQueryable<Product> query = _unitOfWork.Products
@@ -54,6 +58,11 @@ namespace PharmacyStock.Business.Services
                 })
                 .ToListAsync();
         }
+
+        // =====================================================
+        // GET BY ID
+        // =====================================================
+
         public async Task<ProductListDto?> GetByIdAsync(int id)
         {
             var product = await _unitOfWork.Products
@@ -68,23 +77,62 @@ namespace PharmacyStock.Business.Services
             return MapToListDto(product);
         }
 
+        // =====================================================
+        // PRODUCT NAME EXISTS
+        // =====================================================
+
         public async Task<bool> ProductExistsAsync(string productName)
         {
             if (string.IsNullOrWhiteSpace(productName))
                 return false;
 
-            var normalizedName = productName.Trim().ToLower();
+            var normalizedName = productName
+                .Trim()
+                .ToLower();
 
             return await _unitOfWork.Products
-                .AnyAsync(x => x.Name.ToLower() == normalizedName);
+                .AnyAsync(x =>
+                    x.Name.ToLower() == normalizedName);
         }
+
+        // =====================================================
+        // BARCODE EXISTS
+        // =====================================================
+
+        public async Task<bool> BarcodeExistsAsync(
+            string barcode,
+            int? excludeProductId = null)
+        {
+            if (string.IsNullOrWhiteSpace(barcode))
+                return false;
+
+            barcode = barcode.Trim();
+
+            return await _unitOfWork.Products
+                .AnyAsync(x =>
+                    x.Barcode == barcode &&
+                    (!excludeProductId.HasValue ||
+                     x.Id != excludeProductId.Value));
+        }
+
+        // =====================================================
+        // CREATE
+        // =====================================================
 
         public async Task CreateAsync(ProductCreateDto dto)
         {
+            var barcode = dto.Barcode.Trim();
+
+            if (await BarcodeExistsAsync(barcode))
+            {
+                throw new InvalidOperationException(
+                    "Bu barkod başka bir üründe zaten kullanılıyor.");
+            }
+
             var product = new Product
             {
                 Name = dto.Name.Trim(),
-                Barcode = dto.Barcode.Trim(),
+                Barcode = barcode,
                 CategoryId = dto.CategoryId,
                 BrandId = dto.BrandId,
                 Price = dto.Price,
@@ -93,12 +141,18 @@ namespace PharmacyStock.Business.Services
                 MinimumStock = dto.MinimumStock,
 
                 InitialStock = dto.InitialStock,
-                CurrentStock = dto.InitialStock
+                CurrentStock = dto.InitialStock,
+
+                CreatedDate = DateTime.Now
             };
 
             await _unitOfWork.Products.AddAsync(product);
             await _unitOfWork.SaveChangesAsync();
         }
+
+        // =====================================================
+        // UPDATE
+        // =====================================================
 
         public async Task UpdateAsync(ProductUpdateDto dto)
         {
@@ -108,8 +162,18 @@ namespace PharmacyStock.Business.Services
             if (product == null)
                 return;
 
+            var barcode = dto.Barcode.Trim();
+
+            if (await BarcodeExistsAsync(
+                    barcode,
+                    dto.Id))
+            {
+                throw new InvalidOperationException(
+                    "Bu barkod başka bir üründe zaten kullanılıyor.");
+            }
+
             product.Name = dto.Name.Trim();
-            product.Barcode = dto.Barcode.Trim();
+            product.Barcode = barcode;
             product.CategoryId = dto.CategoryId;
             product.BrandId = dto.BrandId;
             product.Price = dto.Price;
@@ -121,6 +185,10 @@ namespace PharmacyStock.Business.Services
 
             await _unitOfWork.SaveChangesAsync();
         }
+
+        // =====================================================
+        // DELETE
+        // =====================================================
 
         public async Task DeleteAsync(int id)
         {
@@ -134,6 +202,10 @@ namespace PharmacyStock.Business.Services
 
             await _unitOfWork.SaveChangesAsync();
         }
+
+        // =====================================================
+        // CRITICAL STOCK
+        // =====================================================
 
         public async Task<List<ProductListDto>> GetCriticalStockAsync()
         {
@@ -167,6 +239,10 @@ namespace PharmacyStock.Business.Services
                 .ToListAsync();
         }
 
+        // =====================================================
+        // OUT OF STOCK
+        // =====================================================
+
         public async Task<List<ProductListDto>> GetOutOfStockAsync()
         {
             return await _unitOfWork.Products
@@ -196,6 +272,10 @@ namespace PharmacyStock.Business.Services
                 })
                 .ToListAsync();
         }
+
+        // =====================================================
+        // EXPIRING SOON
+        // =====================================================
 
         public async Task<List<ProductListDto>> GetExpiringSoonAsync()
         {
@@ -233,6 +313,10 @@ namespace PharmacyStock.Business.Services
                 .ToListAsync();
         }
 
+        // =====================================================
+        // EXPIRED
+        // =====================================================
+
         public async Task<List<ProductListDto>> GetExpiredAsync()
         {
             var today = DateTime.Today;
@@ -267,7 +351,12 @@ namespace PharmacyStock.Business.Services
                 .ToListAsync();
         }
 
-        private static ProductListDto MapToListDto(Product product)
+        // =====================================================
+        // MAP
+        // =====================================================
+
+        private static ProductListDto MapToListDto(
+            Product product)
         {
             return new ProductListDto
             {
@@ -275,9 +364,11 @@ namespace PharmacyStock.Business.Services
                 Name = product.Name,
                 Barcode = product.Barcode,
                 CategoryId = product.CategoryId,
-                CategoryName = product.Category?.Name ?? string.Empty,
+                CategoryName =
+                    product.Category?.Name ?? string.Empty,
                 BrandId = product.BrandId,
-                BrandName = product.Brand?.Name ?? string.Empty,
+                BrandName =
+                    product.Brand?.Name ?? string.Empty,
                 Price = product.Price,
                 CurrentStock = product.CurrentStock,
                 MinimumStock = product.MinimumStock,

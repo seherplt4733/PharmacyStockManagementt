@@ -60,6 +60,9 @@ namespace PharmacyStock.Entities.Models
         [Range(0, 1000000, ErrorMessage = "Minimum stok negatif olamaz.")]
         public int MinimumStock { get; set; } = 10;
 
+        [Display(Name = "Oluşturulma Tarihi")]
+        public DateTime CreatedDate { get; set; }
+
         public virtual ICollection<StockTransaction> StockTransactions { get; set; }
             = new List<StockTransaction>();
     }

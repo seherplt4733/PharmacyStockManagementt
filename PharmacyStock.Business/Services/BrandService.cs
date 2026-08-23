@@ -76,7 +76,8 @@ namespace PharmacyStock.Business.Services
         {
             var brand = new Brand
             {
-                Name = dto.Name.Trim()
+                Name = dto.Name.Trim(),
+                CreatedDate = DateTime.Now
             };
 
             await _unitOfWork.Brands.AddAsync(brand);

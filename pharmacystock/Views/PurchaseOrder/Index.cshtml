@@ -2,6 +2,13 @@
 @using PharmacyStock.Entities.Enum
 @using System.Linq
 
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/purchase-order.css"
+          asp-append-version="true" />
+}
+
+
 @{
     ViewData["Title"] = "Sipariş Takibi & Geçmişi";
 
@@ -71,105 +78,81 @@
     <!-- =====================================================
          KPI KARTLARI
     ====================================================== -->
+    <!-- =====================================================
+     KPI KARTLARI
+====================================================== -->
 
     <div class="row g-3 mb-4">
 
-        <!-- TOPLAM -->
-
+        <!-- TOPLAM SİPARİŞ -->
         <div class="col-md-4">
-
-            <div class="card border-0 shadow-sm rounded-3">
-
-                <div class="card-body d-flex align-items-center justify-content-between">
+            <div class="card purchase-card purchase-card-total h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
 
                     <div>
-
-                        <span class="text-muted small d-block mb-1">
+                        <div class="purchase-card-label">
                             Toplam Sipariş
-                        </span>
+                        </div>
 
-                        <h3 class="fw-bold mb-0">
+                        <div class="purchase-card-value">
                             @totalOrders
-                        </h3>
-
+                        </div>
                     </div>
 
-                    <div class="p-3 bg-primary bg-opacity-10 rounded-circle text-primary">
-
-                        <i class="bi bi-box-seam fs-3"></i>
-
+                    <div class="purchase-card-icon">
+                        <i class="bi bi-box-seam"></i>
                     </div>
 
                 </div>
-
             </div>
-
         </div>
 
 
-        <!-- BEKLEYEN -->
-
+        <!-- BEKLEYEN SİPARİŞLER -->
         <div class="col-md-4">
-
-            <div class="card border-0 shadow-sm rounded-3">
-
-                <div class="card-body d-flex align-items-center justify-content-between">
+            <div class="card purchase-card purchase-card-pending h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
 
                     <div>
-
-                        <span class="text-muted small d-block mb-1">
+                        <div class="purchase-card-label">
                             Bekleyen Siparişler
-                        </span>
+                        </div>
 
-                        <h3 class="fw-bold mb-0 text-warning">
+                        <div class="purchase-card-value">
                             @pendingOrders
-                        </h3>
-
+                        </div>
                     </div>
 
-                    <div class="p-3 bg-warning bg-opacity-10 rounded-circle text-warning">
-
-                        <i class="bi bi-clock-history fs-3"></i>
-
+                    <div class="purchase-card-icon">
+                        <i class="bi bi-clock-history"></i>
                     </div>
 
                 </div>
-
             </div>
-
         </div>
 
 
-        <!-- TAMAMLANAN -->
-
+        <!-- TAMAMLANAN SİPARİŞLER -->
         <div class="col-md-4">
-
-            <div class="card border-0 shadow-sm rounded-3">
-
-                <div class="card-body d-flex align-items-center justify-content-between">
+            <div class="card purchase-card purchase-card-completed h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
 
                     <div>
-
-                        <span class="text-muted small d-block mb-1">
+                        <div class="purchase-card-label">
                             Tamamlanan Siparişler
-                        </span>
+                        </div>
 
-                        <h3 class="fw-bold mb-0 text-success">
+                        <div class="purchase-card-value">
                             @completedOrders
-                        </h3>
-
+                        </div>
                     </div>
 
-                    <div class="p-3 bg-success bg-opacity-10 rounded-circle text-success">
-
-                        <i class="bi bi-check-circle fs-3"></i>
-
+                    <div class="purchase-card-icon">
+                        <i class="bi bi-check-circle"></i>
                     </div>
 
                 </div>
-
             </div>
-
         </div>
 
     </div>
@@ -645,5 +628,8 @@
     <script src="~/js/purchase-order.js"
             asp-append-version="true">
     </script>
+
+ 
+ 
 
 }

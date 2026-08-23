@@ -20,32 +20,34 @@
    KPI KART RENKLERİ
 ======================================================= */
 
-/* ACİL SİPARİŞ - KIRMIZI */
-.card-urgent {
-    background: linear-gradient( 135deg, #a92f37 0%, #df3c42 100% ) !important;
-    color: #ffffff !important;
-}
 
 
-/* SİPARİŞ VERİLECEK - YEŞİL */
-.card-primary {
-    background: linear-gradient( 135deg, #24784f 0%, #35a168 100% ) !important;
-    color: #ffffff !important;
-}
+    /* ACİL SİPARİŞ - KIRMIZI */
+    .summary-card.card-urgent {
+        background: linear-gradient( 135deg, #742A2A 0%, #E53E3E 100% ) !important;
+        box-shadow: 0 4px 12px rgba(229, 62, 62, 0.20) !important;
+    }
 
 
-/* KRİTİK ÜRÜN - TURUNCU */
-.card-warning {
-    background: linear-gradient( 135deg, #a94719 0%, #e46d18 100% ) !important;
-    color: #ffffff !important;
-}
+    /* SİPARİŞ VERİLECEK - YEŞİL */
+    .summary-card.card-primary {
+        background: linear-gradient( 135deg, #22543D 0%, #38A169 100% ) !important;
+        box-shadow: 0 4px 12px rgba(56, 161, 105, 0.20) !important;
+    }
 
 
-/* ORTALAMA DEVİR - MAVİ */
-.card-success {
-    background: linear-gradient( 135deg, #28588a 0%, #378bd0 100% ) !important;
-    color: #ffffff !important;
-}
+    /* KRİTİK ÜRÜN - TURUNCU */
+    .summary-card.card-warning {
+        background: linear-gradient( 135deg, #7B341E 0%, #DD6B20 100% ) !important;
+        box-shadow: 0 4px 12px rgba(221, 107, 32, 0.20) !important;
+    }
+
+
+    /* ORTALAMA DEVİR - MAVİ */
+    .summary-card.card-success {
+        background: linear-gradient( 135deg, #2A4365 0%, #3182CE 100% ) !important;
+        box-shadow: 0 4px 12px rgba(49, 130, 206, 0.20) !important;
+    }
 
 
 /* =======================================================
@@ -795,4 +797,32 @@ body.dark-mode .reason-cell {
 
 .order-table-card {
     border-radius: 12px !important;
+}
+
+/* =======================================================
+   ORDER DRAFT KPI - DARK MODE RENK KORUMASI
+======================================================= */
+
+body.dark-mode .summary-card.card-urgent {
+    background: linear-gradient( 135deg, #742A2A 0%, #E53E3E 100% ) !important;
+}
+
+body.dark-mode .summary-card.card-primary {
+    background: linear-gradient( 135deg, #22543D 0%, #38A169 100% ) !important;
+}
+
+body.dark-mode .summary-card.card-warning {
+    background: linear-gradient( 135deg, #7B341E 0%, #DD6B20 100% ) !important;
+}
+
+body.dark-mode .summary-card.card-success {
+    background: linear-gradient( 135deg, #2A4365 0%, #3182CE 100% ) !important;
+}
+
+/* Kart yazıları iki temada da beyaz */
+body.dark-mode .summary-card,
+body.dark-mode .summary-card *,
+body:not(.dark-mode) .summary-card,
+body:not(.dark-mode) .summary-card * {
+    color: #ffffff !important;
 }

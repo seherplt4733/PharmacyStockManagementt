@@ -1,0 +1,91 @@
+﻿/* =======================================================
+   PURCHASE ORDER KPI CARDS
+======================================================= */
+
+.purchase-card {
+    border-radius: 12px !important;
+    border: none !important;
+    min-height: 125px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .purchase-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .purchase-card,
+    .purchase-card * {
+        color: #ffffff !important;
+    }
+
+
+/* =======================================================
+   TOPLAM SİPARİŞ
+   Stok Devir -> Ortalama Devir ile aynı
+======================================================= */
+
+.purchase-card-total {
+    background: linear-gradient( 135deg, #2A4365 0%, #3182CE 100% ) !important;
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.20) !important;
+}
+
+
+/* =======================================================
+   BEKLEYEN SİPARİŞLER
+   Stok Devir -> Yavaş Dönen ile aynı
+======================================================= */
+
+.purchase-card-pending {
+    background: linear-gradient( 135deg, #7B341E 0%, #DD6B20 100% ) !important;
+    box-shadow: 0 4px 12px rgba(221, 107, 32, 0.20) !important;
+}
+
+
+/* =======================================================
+   TAMAMLANAN SİPARİŞLER
+   Stok Devir -> Hızlı Dönen ile aynı
+======================================================= */
+
+.purchase-card-completed {
+    background: linear-gradient( 135deg, #22543D 0%, #38A169 100% ) !important;
+    box-shadow: 0 4px 12px rgba(56, 161, 105, 0.20) !important;
+}
+
+
+/* =======================================================
+   İKON ALANLARI
+======================================================= */
+
+.purchase-card .rounded-circle {
+    background: rgba(255, 255, 255, 0.13) !important;
+    color: #ffffff !important;
+}
+
+
+/* Bootstrap text-muted / text-warning / text-success
+   sınıflarının kart rengini bozmasını engeller */
+
+.purchase-card .text-muted,
+.purchase-card .text-warning,
+.purchase-card .text-success,
+.purchase-card .text-primary {
+    color: #ffffff !important;
+}
+
+
+/* =======================================================
+   DARK MODE
+======================================================= */
+
+body.dark-mode .purchase-card-total {
+    background: linear-gradient( 135deg, #2A4365 0%, #3182CE 100% ) !important;
+}
+
+body.dark-mode .purchase-card-pending {
+    background: linear-gradient( 135deg, #7B341E 0%, #DD6B20 100% ) !important;
+}
+
+body.dark-mode .purchase-card-completed {
+    background: linear-gradient( 135deg, #22543D 0%, #38A169 100% ) !important;
+}

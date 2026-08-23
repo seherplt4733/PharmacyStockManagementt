@@ -66,6 +66,7 @@ namespace pharmacystock.Controllers
             }
 
 
+            // Ürün adı daha önce kullanılmış mı?
             if (await _productService.ProductExistsAsync(dto.Name))
             {
                 ModelState.AddModelError(
@@ -80,7 +81,37 @@ namespace pharmacystock.Controllers
             }
 
 
-            await _productService.CreateAsync(dto);
+            // Barkod daha önce kullanılmış mı?
+            if (await _productService.BarcodeExistsAsync(dto.Barcode))
+            {
+                ModelState.AddModelError(
+                    nameof(dto.Barcode),
+                    "Bu barkod başka bir üründe zaten kullanılıyor.");
+
+                await LoadDropdownsAsync(
+                    dto.CategoryId,
+                    dto.BrandId);
+
+                return View(dto);
+            }
+
+
+            try
+            {
+                await _productService.CreateAsync(dto);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(
+                    nameof(dto.Barcode),
+                    ex.Message);
+
+                await LoadDropdownsAsync(
+                    dto.CategoryId,
+                    dto.BrandId);
+
+                return View(dto);
+            }
 
 
             TempData["Success"] =
@@ -180,7 +211,40 @@ namespace pharmacystock.Controllers
             }
 
 
-            await _productService.UpdateAsync(dto);
+            // Düzenlenen ürünün kendi barkodu hariç
+            // başka üründe aynı barkod var mı?
+            if (await _productService.BarcodeExistsAsync(
+                    dto.Barcode,
+                    dto.Id))
+            {
+                ModelState.AddModelError(
+                    nameof(dto.Barcode),
+                    "Bu barkod başka bir üründe zaten kullanılıyor.");
+
+                await LoadDropdownsAsync(
+                    dto.CategoryId,
+                    dto.BrandId);
+
+                return View(dto);
+            }
+
+
+            try
+            {
+                await _productService.UpdateAsync(dto);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(
+                    nameof(dto.Barcode),
+                    ex.Message);
+
+                await LoadDropdownsAsync(
+                    dto.CategoryId,
+                    dto.BrandId);
+
+                return View(dto);
+            }
 
 
             TempData["Success"] =
@@ -292,16 +356,17 @@ namespace pharmacystock.Controllers
 
         // =====================================================
         // DROPDOWN
-        // Geçiş aşamasında DataAccess kullanılıyor.
-        // Category / Brand servisleri taşındığında kaldıracağız.
         // =====================================================
 
         private async Task LoadDropdownsAsync(
             int? categoryId = null,
             int? brandId = null)
         {
-            var categories = await _categoryService.GetAllAsync();
-            var brands = await _brandService.GetAllAsync();
+            var categories =
+                await _categoryService.GetAllAsync();
+
+            var brands =
+                await _brandService.GetAllAsync();
 
 
             ViewBag.Categories =

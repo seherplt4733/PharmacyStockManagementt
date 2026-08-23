@@ -14,5 +14,7 @@ namespace PharmacyStock.Entities.Models
 
         public virtual ICollection<Product> Products { get; set; }
             = new List<Product>();
+
+        public DateTime CreatedDate { get; set; }
     }
 }
